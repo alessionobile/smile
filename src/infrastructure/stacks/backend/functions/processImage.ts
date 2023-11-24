@@ -26,11 +26,12 @@ export class ProcessImageFunction extends Construct {
     this.functionRole = new Role(this, "FunctionRole", {
       assumedBy: new ServicePrincipal("lambda.amazonaws.com"),
     });
-    this.functionRole.addManagedPolicy(
-      ManagedPolicy.fromAwsManagedPolicyName(
-        "service-role/AWSLambdaBasicExecutionRole"
-      )
-    );
+    this.functionRole.addManagedPolicy(ManagedPolicy.fromAwsManagedPolicyName(
+      "service-role/AWSLambdaBasicExecutionRole"
+    ));
+    this.functionRole.addManagedPolicy(ManagedPolicy.fromAwsManagedPolicyName(
+      "AmazonRekognitionReadOnlyAccess"
+    ));
 
     this.function = new Function(this, 'ProcessImageFunction', {
       functionName : "ProcessImageFunction",
@@ -42,8 +43,6 @@ export class ProcessImageFunction extends Construct {
       timeout      : Duration.seconds(30),
       logRetention : RetentionDays.ONE_MONTH,
       environment  : {
-        "MIN_CONFIDENCE": this.node.tryGetContext("rekognitionMinConfidence"),
-        "OBJECTS_OF_INTEREST_LABELS": this.node.tryGetContext("rekognitionObjectsOfInterestLabels"),
         "REGION": this.node.tryGetContext("region")
       }
     });
@@ -54,7 +53,7 @@ export class ProcessImageFunction extends Construct {
     });
 
     this.route = {
-      path: "/process-image",
+      path: "/api/process-image",
       integration: this.integration,
       methods: [
         HttpMethod.POST
