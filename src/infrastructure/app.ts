@@ -14,7 +14,7 @@ const backend = new BackendStack(app, `BackendStack`, {
   crossRegionReferences: true
 });
 
-const frontend = new FrontendStack(app, `FrontendWafStack`, {
+const frontend = new FrontendStack(app, `FrontendStack`, {
   env: {
     account: process.env.CDK_DEPLOY_ACCOUNT ?? process.env.CDK_DEFAULT_ACCOUNT,
     region: "us-east-1",

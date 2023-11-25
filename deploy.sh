@@ -57,6 +57,6 @@ echo "$(prefix)Build Log Stream Name: $logStreamName"
 
 echo "$(prefix)Fetch CDK deployment logs..."
 logs=$(aws logs get-log-events --log-group-name $logGroupName --log-stream-name $logStreamName)
-frontendUrl=$(echo "$logs" | grep -o 'FrontendURL = [^ ]*' | cut -d' ' -f3 | tr -d '\n,')
+frontendUrl=$(echo "$logs" | grep -o 'FrontendStack.CdnURL = [^ ]*' | cut -d' ' -f3 | tr -d '\n,')
 
 echo "$(prefix)Frontend URL: $frontendUrl"

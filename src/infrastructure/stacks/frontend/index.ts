@@ -9,6 +9,7 @@ interface FrontendStackProps extends StackProps {
 
 export class FrontendStack extends Stack {
   public readonly cdn: Cdn;
+  public readonly cdnUrl: CfnOutput;
 
   constructor(scope: Construct, id: string, props: FrontendStackProps) {
     super(scope, id, props);
@@ -17,7 +18,7 @@ export class FrontendStack extends Stack {
       backendStack: props.backendStack
     });
 
-    const CdnUrl = new CfnOutput(this, "CdnURL", {
+    this.cdnUrl = new CfnOutput(this, "CdnURL", {
       value: `https://${this.cdn.distribution.domainName}`
     });
   }
