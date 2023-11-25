@@ -71,7 +71,6 @@ export class Cdn extends Construct {
         NODE_ENV: process.env.NODE_ENV || "production",
         REACT_APP_REGION: Stack.of(props.backendStack.auth.userPool).region,
         REACT_APP_API_ENDPOINT: `https://${this.distribution.domainName}/api`,
-        //REACT_APP_API_ENDPOINT: props.backendStack.api.api.apiEndpoint,
         REACT_APP_USER_POOL_ID: props.backendStack.auth.userPool.userPoolId,
         REACT_APP_USER_POOL_CLIENT_ID: props.backendStack.auth.client.userPoolClientId
       },

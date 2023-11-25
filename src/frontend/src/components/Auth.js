@@ -1,4 +1,3 @@
-import '@aws-amplify/ui-react/styles.css';
 import {
   View,
   Button,
@@ -8,11 +7,11 @@ import {
   Authenticator,
   useTheme
 } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
 
 const authComponents = {
   Footer() {
     const { tokens } = useTheme();
-
     return (
       <View textAlign="center" padding={tokens.space.large}>
         <Text color={tokens.colors.neutral[80]}>
@@ -25,19 +24,14 @@ const authComponents = {
   SignIn: {
     Header() {
       const { tokens } = useTheme();
-
       return (
-        <Heading
-          padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
-          level={3}
-        >
+        <Heading padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`} level={3}>
           Sign-in to your account
         </Heading>
       );
     },
     Footer() {
       const { toForgotPassword } = useAuthenticator();
-
       return (
         <View textAlign="center">
           <Button
@@ -56,19 +50,14 @@ const authComponents = {
   SignUp: {
     Header() {
       const { tokens } = useTheme();
-
       return (
-        <Heading
-          padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
-          level={3}
-        >
+        <Heading padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`} level={3}>
           Create a new account
         </Heading>
       );
     },
     Footer() {
       const { toSignIn } = useAuthenticator();
-
       return (
         <View textAlign="center">
           <Button
@@ -87,10 +76,7 @@ const authComponents = {
     Header() {
       const { tokens } = useTheme();
       return (
-        <Heading
-          padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
-          level={3}
-        >
+        <Heading padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`} level={3}>
           Enter Information:
         </Heading>
       );
@@ -103,10 +89,7 @@ const authComponents = {
     Header() {
       const { tokens } = useTheme();
       return (
-        <Heading
-          padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
-          level={3}
-        >
+        <Heading padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`} level={3}>
           Enter Information:
         </Heading>
       );
@@ -119,10 +102,7 @@ const authComponents = {
     Header() {
       const { tokens } = useTheme();
       return (
-        <Heading
-          padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
-          level={3}
-        >
+        <Heading padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`} level={3}>
           Enter Information:
         </Heading>
       );
@@ -135,10 +115,7 @@ const authComponents = {
     Header() {
       const { tokens } = useTheme();
       return (
-        <Heading
-          padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
-          level={3}
-        >
+        <Heading padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`} level={3}>
           Enter Information:
         </Heading>
       );
@@ -151,10 +128,7 @@ const authComponents = {
     Header() {
       const { tokens } = useTheme();
       return (
-        <Heading
-          padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`}
-          level={3}
-        >
+        <Heading padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`} level={3}>
           Enter Information:
         </Heading>
       );

@@ -41,11 +41,6 @@
     "region": "eu-central-1",
     "rekognitionMinConfidence": "85",
     "rekognitionObjectsOfInterestLabels": "Mobile Phone,Cell Phone",
-    "allowedIpV4AddressRanges": ["0.0.0.0/1", "128.0.0.0/1"],
-    "allowedIpV6AddressRanges": [
-      "0000:0000:0000:0000:0000:0000:0000:0000/1",
-      "8000:0000:0000:0000:0000:0000:0000:0000/1"
-    ],
     "corsAllowOrigins": ["*"],
     "corsAllowHeaders": [
       "Content-Type",

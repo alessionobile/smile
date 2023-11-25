@@ -3,8 +3,8 @@ import { Flex, View, SwitchField  } from "@aws-amplify/ui-react";
 import Webcam from "react-webcam";
 
 import { useAuth } from "./hooks/useAuth";
-
 import processImage from "./utils/requests";
+
 import Auth from "./components/Auth";
 import EngagementSummary from "./components/EngagementsSummary";
 import Header from "./components/Header";
@@ -87,8 +87,8 @@ export default function App() {
             </View>
           </Flex>
         </>
-      ) :
-      ( <Auth /> )}
+      ) : (
+        <Auth /> )}
     </View>
   );
 }

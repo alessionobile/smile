@@ -6,8 +6,8 @@ import { post } from 'aws-amplify/api';
 Amplify.configure({
   Auth: {
     Cognito: {
-      region: process.env.REACT_APP_REGION,
       mandatorySignIn: true,
+      region: process.env.REACT_APP_REGION,
       userPoolId: process.env.REACT_APP_USER_POOL_ID,
       userPoolClientId: process.env.REACT_APP_USER_POOL_CLIENT_ID
     }

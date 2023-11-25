@@ -16,11 +16,6 @@ const respond = (statusCode, response) => ({
 });
 
 const fetchFaces = async (imageBytes) => {
-  /*
-    Detect Faces
-    Uses Rekognition's DetectFaces functionality
-  */
-
   const facesTest = {
     TestName: "Face Detection",
   };

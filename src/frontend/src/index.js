@@ -7,8 +7,10 @@ const theme = {
   name: 'my-theme',
   overrides: [defaultDarkModeOverride],
 };
+
 const container = document.querySelector('#root');
 const root = createRoot(container);
+
 root.render(
   <ThemeProvider theme={theme} colorMode="dark">
     <Authenticator.Provider>

@@ -1,5 +1,5 @@
-import { signOut } from 'aws-amplify/auth';
 import { Menu, MenuItem, View } from "@aws-amplify/ui-react";
+import { signOut } from 'aws-amplify/auth';
 
 const Header = () => {
   return (
