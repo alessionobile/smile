@@ -2,7 +2,7 @@
 source vars.sh
 
 # Delete FrontendStack
-echo -e "\n$(prefix)[$FrontendStack] Deletion in progress\n"
+echo -e "$(prefix)$RED [$FrontendStack] Deletion in progress.$ENDCOLOR\n"
 frontend=$(aws cloudformation delete-stack --stack-name $FrontendStack --region us-east-1 --output text)
 spin='-\|/'
 i=0
@@ -13,10 +13,10 @@ while true; do
     fi
     printf "\r${spin:i++%${#spin}:1}"
 done
-echo -e "\n$(prefix)[$FrontendStack] Deleted\n"
+echo -e "$(prefix)$GREEN [$FrontendStack] ✅ Deleted.$ENDCOLOR\n"
 
 # Delete BackendStack
-echo -e "\n$(prefix)[$BackendStack] Deletion in progress\n"
+echo -e "$(prefix)$RED [$BackendStack] Deletion in progress.$ENDCOLOR\n"
 backend=$(aws cloudformation delete-stack --stack-name $BackendStack --region $Region --output text)
 spin='-\|/'
 i=0
@@ -27,10 +27,10 @@ while true; do
     fi
     printf "\r${spin:i++%${#spin}:1}"
 done
-echo -e "\n$(prefix)[$BackendStack] Deleted\n"
+echo -e "$(prefix)$GREEN [$BackendStack] ✅ Deleted.$ENDCOLOR\n"
 
 # Delete SmilePipeline
-echo -e "\n$(prefix)[$StackName Stack] Deletion in progress\n"
+echo -e "$(prefix)$RED [$StackName Stack] Deletion in progress.$ENDCOLOR\n"
 pipeline=$(aws cloudformation delete-stack --stack-name $StackName --region $Region --output text)
 spin='-\|/'
 i=0
@@ -41,5 +41,5 @@ while true; do
     fi
     printf "\r${spin:i++%${#spin}:1}"
 done
-echo -e "\n$(prefix)[$StackName Stack] Deleted\n"
+echo -e "$(prefix)$GREEN [$StackName Stack] ✅ Deleted. $ENDCOLOR\n"
 

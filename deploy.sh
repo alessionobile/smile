@@ -27,7 +27,7 @@ while true; do
     fi
     printf "\r${spin:i++%${#spin}:1}"
 done
-echo -e "\n$(prefix)$GREEN [Inception] ✅ Inception completed.$ENDCOLOR\n"
+echo -e "\n$(prefix)$GREEN [Inception] Inception completed.$ENDCOLOR\n"
 
 outputs=$(aws cloudformation describe-stacks --stack-name $StackName --query 'Stacks[0].Outputs')
 projectName=$(echo $outputs | jq -r '.[] | select(.OutputKey=="ProjectName").OutputValue')
@@ -44,7 +44,7 @@ while true; do
     fi
     sleep 10
 done
-echo -e "\n$(prefix)$GREEN [Deployment] ✅ The deployment has been completed with status: $buildStatus.$ENDCOLOR\n"
+echo -e "\n$(prefix)$GREEN [Deployment] The deployment has been completed with status: $buildStatus.$ENDCOLOR\n"
 
 buildDetail=$(aws codebuild batch-get-builds --ids $buildId --query 'builds[0].logs.{groupName: groupName, streamName: streamName}' --output json)
 
@@ -56,6 +56,6 @@ logStreamName=$(echo $buildDetail | jq -r '.streamName')
 
 #echo "$(prefix)Fetch CDK deployment logs..."
 logs=$(aws logs get-log-events --log-group-name $logGroupName --log-stream-name $logStreamName)
-frontendUrl=$(echo "$logs" | grep -o 'FrontendStack.CdnURL = [^ ]*' | cut -d' ' -f3 | tr -d '\n"')
+frontendUrl=$(echo "$logs" | grep -o 'FrontendStack.CdnURL = [^ ]*' | cut -d' ' -f3 | tr -d '\n",')
 
-echo -e "\n$(prefix)$GREEN ✅ Go Smile at $frontendUrl $ENDCOLOR"
+echo -e "\n$(prefix)$GREEN ✅ Go Smile at $frontendUrl\n$ENDCOLOR"
