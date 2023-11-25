@@ -7,11 +7,6 @@
 
 source vars.sh
 
-prefix () {
-    local prefix_output="$(date +'[Smile] %Y-%m-%d %H:%M:%S | ')"
-    echo "$prefix_output"
-}
-
 stackId=$(aws cloudformation create-stack \
   --stack-name $StackName \
   --region $Region \
@@ -19,10 +14,10 @@ stackId=$(aws cloudformation create-stack \
   --capabilities CAPABILITY_IAM \
   --query 'StackId' --output text)
 
-echo "$(prefix)[Inception] Deploying the '$StackName' CloudFormation stack in $Region"
-echo "$(prefix)[Inception] INFO: '$StackName' deploys a CodeBuild project responsible for the execution of our IaC stack with AWS CDK."
-echo "$(prefix)[Inception] INFO: This is a deployment abstraction implemented to avoid issues with local machine dependencies and to speed up the deployment lifecycle."
-echo "$(prefix)[Inception] INFO: (and to get you to Smile as soon as possible, of course!)"
+echo -e "$(prefix)$YELLOW [Inception] Deploying the '$StackName' CloudFormation stack in $Region.$ENDCOLOR"
+echo -e "$(prefix)$CYAN INFO: '$StackName' deploys a CodeBuild project responsible for the execution of our IaC stack with AWS CDK.$ENDCOLOR"
+echo -e "$(prefix)$CYAN INFO: This is a deployment abstraction implemented to avoid issues with local machine dependencies and to speed up the deployment lifecycle.$ENDCOLOR"
+echo -e "$(prefix)$CYAN INFO: and to get you to Smile as soon as possible, of course!$ENDCOLOR"
 spin='-\|/'
 i=0
 while true; do
@@ -32,16 +27,16 @@ while true; do
     fi
     printf "\r${spin:i++%${#spin}:1}"
 done
-echo -e "\n$(prefix)[Inception] Inception completed.\n"
+echo -e "\n$(prefix)$GREEN [Inception] ✅ Inception completed.$ENDCOLOR\n"
 
 outputs=$(aws cloudformation describe-stacks --stack-name $StackName --query 'Stacks[0].Outputs')
 projectName=$(echo $outputs | jq -r '.[] | select(.OutputKey=="ProjectName").OutputValue')
 
-echo "$(prefix)[Deployment] Starting the IaC deployment through our CodeBuild project: $projectName..."
 buildId=$(aws codebuild start-build --project-name $projectName --query 'build.id' --output text)
-
-echo "$(prefix)[Deployment] INFO: Go grab a coffee while we'll wait for the CodeBuild project to complete. It will take about 15 minutes."
-echo "$(prefix)[Deployment] INFO: If you'd like to read the log stream, check out the last build run at: https://$Region.console.aws.amazon.com/codesuite/codebuild/projects/$projectName/history?region=$Region"
+echo -e "$(prefix)$YELLOW [Deployment] Starting the IaC deployment.$ENDCOLOR"
+echo -e "$(prefix)$CYAN INFO: The IaC stack is built with AWS CDK and executed by the CodeBuild project '$projectName.'$ENDCOLOR"
+echo -e "$(prefix)$CYAN INFO: ☕ Go grab a coffee while we'll wait for the CodeBuild run to complete. It will take about 15 minutes.$ENDCOLOR"
+echo -e "$(prefix)$CYAN INFO: For the nerds: log stream available at: https://$Region.console.aws.amazon.com/codesuite/codebuild/projects/$projectName/build/$buildId/?region=$Region $ENDCOLOR"
 while true; do
     buildStatus=$(aws codebuild batch-get-builds --ids $buildId --query 'builds[0].buildStatus' --output text)
     if [[ "$buildStatus" == "SUCCEEDED" || "$buildStatus" == "FAILED" || "$buildStatus" == "STOPPED" ]]; then
@@ -49,7 +44,7 @@ while true; do
     fi
     sleep 10
 done
-echo "$(prefix)[Deployment] The deployment has been completed with status: $buildStatus"
+echo -e "\n$(prefix)$GREEN [Deployment] ✅ The deployment has been completed with status: $buildStatus.$ENDCOLOR\n"
 
 buildDetail=$(aws codebuild batch-get-builds --ids $buildId --query 'builds[0].logs.{groupName: groupName, streamName: streamName}' --output json)
 
@@ -61,6 +56,6 @@ logStreamName=$(echo $buildDetail | jq -r '.streamName')
 
 #echo "$(prefix)Fetch CDK deployment logs..."
 logs=$(aws logs get-log-events --log-group-name $logGroupName --log-stream-name $logStreamName)
-frontendUrl=$(echo "$logs" | grep -o 'FrontendStack.CdnURL = [^ ]*' | cut -d' ' -f3 | tr -d '\n,')
+frontendUrl=$(echo "$logs" | grep -o 'FrontendStack.CdnURL = [^ ]*' | cut -d' ' -f3 | tr -d '\n"')
 
-echo "$(prefix)[FINISH] Go Smile at $frontendUrl"
+echo -e "\n$(prefix)$GREEN ✅ Go Smile at $frontendUrl $ENDCOLOR"

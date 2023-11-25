@@ -1,14 +1,8 @@
 #!/bin/bash
-
 source vars.sh
 
-prefix () {
-    local prefix_output="$(date +'[Smile] %Y-%m-%d %H:%M:%S | ')"
-    echo "$prefix_output"
-}
-
 # Delete FrontendStack
-echo -e "\n$(prefix)[$FrontendStack] Initiating deletion.\n"
+echo -e "\n$(prefix)[$FrontendStack] Deletion in progress\n"
 frontend=$(aws cloudformation delete-stack --stack-name $FrontendStack --region us-east-1 --output text)
 spin='-\|/'
 i=0
@@ -22,7 +16,7 @@ done
 echo -e "\n$(prefix)[$FrontendStack] Deleted\n"
 
 # Delete BackendStack
-echo -e "\n$(prefix)[$BackendStack] Initiating deletion.\n"
+echo -e "\n$(prefix)[$BackendStack] Deletion in progress\n"
 backend=$(aws cloudformation delete-stack --stack-name $BackendStack --region $Region --output text)
 spin='-\|/'
 i=0
@@ -36,7 +30,7 @@ done
 echo -e "\n$(prefix)[$BackendStack] Deleted\n"
 
 # Delete SmilePipeline
-echo -e "\n$(prefix)[$StackName Stack] Initiating deletion.\n"
+echo -e "\n$(prefix)[$StackName Stack] Deletion in progress\n"
 pipeline=$(aws cloudformation delete-stack --stack-name $StackName --region $Region --output text)
 spin='-\|/'
 i=0
