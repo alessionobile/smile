@@ -14,7 +14,7 @@ spin='-\|/'
 i=0
 while true; do
     frontendStatus=$(aws cloudformation describe-stacks --stack-name $FrontendStack --query 'Stacks[0].StackStatus' --region us-east-1 --output text)
-    if [[ "$frontendStatus" == "DELETE_COMPLETE" ]]; then
+    if [[ "$frontendStatus" == "DELETE_COMPLETE" || "$frontendStatus" ==  *"does not exist"*]]; then
         break
     fi
     printf "\r${spin:i++%${#spin}:1}"
@@ -28,7 +28,7 @@ spin='-\|/'
 i=0
 while true; do
     backendStatus=$(aws cloudformation describe-stacks --stack-name $BackendStack --query 'Stacks[0].StackStatus' --region $Region --output text)
-    if [[ "$backendStatus" == "DELETE_COMPLETE" ]]; then
+    if [[ "$backendStatus" == "DELETE_COMPLETE" || "$backendStatus" ==  *"does not exist"*]]; then
         break
     fi
     printf "\r${spin:i++%${#spin}:1}"
@@ -42,7 +42,7 @@ spin='-\|/'
 i=0
 while true; do
     pipelineStatus=$(aws cloudformation describe-stacks --stack-name $StackName --query 'Stacks[0].StackStatus' --region $Region --output text)
-    if [[ "$pipelineStatus" == "DELETE_COMPLETE" ]]; then
+    if [[ "$pipelineStatus" == "DELETE_COMPLETE" || "$pipelineStatus" ==  *"does not exist"*]]; then
         break
     fi
     printf "\r${spin:i++%${#spin}:1}"
