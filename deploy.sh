@@ -5,21 +5,24 @@
 ## Facilitates infrastructure deployments by establishing a CI/CD pipeline
 ## Adopts AWS native IaC tools to handle cloud deployment states (CDK + CloudFormation)
 
-StackName="SmilePipeline"
+source vars.sh
 
 prefix () {
-    local prefix_output="$(date +'%Y-%m-%d %H:%M:%S | ')"
+    local prefix_output="$(date +'[Smile] %Y-%m-%d %H:%M:%S | ')"
     echo "$prefix_output"
 }
 
 stackId=$(aws cloudformation create-stack \
   --stack-name $StackName \
+  --region $Region \
   --template-body file://deploy.yml \
   --capabilities CAPABILITY_IAM \
   --query 'StackId' --output text)
 
-echo "$(prefix)Deploying the CloudFormation stack: $StackName"
-echo "$(prefix)NOTE: this stack deploys a CodeBuild project used to initiate the $StackName CDK deployment."
+echo "$(prefix)[Inception] Deploying the '$StackName' CloudFormation stack in $Region"
+echo "$(prefix)[Inception] INFO: '$StackName' deploys a CodeBuild project responsible for the execution of our IaC stack with AWS CDK."
+echo "$(prefix)[Inception] INFO: This is a deployment abstraction implemented to avoid issues with local machine dependencies and to speed up the deployment lifecycle."
+echo "$(prefix)[Inception] INFO: (and to get you to Smile as soon as possible, of course!)"
 spin='-\|/'
 i=0
 while true; do
@@ -29,15 +32,16 @@ while true; do
     fi
     printf "\r${spin:i++%${#spin}:1}"
 done
-echo -e "\n$(prefix)Deployment completed.\n"
+echo -e "\n$(prefix)[Inception] Inception completed.\n"
 
 outputs=$(aws cloudformation describe-stacks --stack-name $StackName --query 'Stacks[0].Outputs')
 projectName=$(echo $outputs | jq -r '.[] | select(.OutputKey=="ProjectName").OutputValue')
 
-echo "$(prefix)Initializing the CodeBuild project: $projectName..."
+echo "$(prefix)[Deployment] Starting the IaC deployment through our CodeBuild project: $projectName..."
 buildId=$(aws codebuild start-build --project-name $projectName --query 'build.id' --output text)
 
-echo "$(prefix)Waiting for the CodeBuild project to complete..."
+echo "$(prefix)[Deployment] INFO: Go grab a coffee while we'll wait for the CodeBuild project to complete. It will take about 15 minutes."
+echo "$(prefix)[Deployment] INFO: If you'd like to read the log stream, check out the last build run at: https://$Region.console.aws.amazon.com/codesuite/codebuild/projects/$projectName/history?region=$Region"
 while true; do
     buildStatus=$(aws codebuild batch-get-builds --ids $buildId --query 'builds[0].buildStatus' --output text)
     if [[ "$buildStatus" == "SUCCEEDED" || "$buildStatus" == "FAILED" || "$buildStatus" == "STOPPED" ]]; then
@@ -45,18 +49,18 @@ while true; do
     fi
     sleep 10
 done
-echo "$(prefix)CodeBuild project completed with status: $buildStatus"
+echo "$(prefix)[Deployment] The deployment has been completed with status: $buildStatus"
 
 buildDetail=$(aws codebuild batch-get-builds --ids $buildId --query 'builds[0].logs.{groupName: groupName, streamName: streamName}' --output json)
 
 logGroupName=$(echo $buildDetail | jq -r '.groupName')
 logStreamName=$(echo $buildDetail | jq -r '.streamName')
 
-echo "$(prefix)Build Log Group Name: $logGroupName"
-echo "$(prefix)Build Log Stream Name: $logStreamName"
+#echo "$(prefix)Build Log Group Name: $logGroupName"
+#echo "$(prefix)Build Log Stream Name: $logStreamName"
 
-echo "$(prefix)Fetch CDK deployment logs..."
+#echo "$(prefix)Fetch CDK deployment logs..."
 logs=$(aws logs get-log-events --log-group-name $logGroupName --log-stream-name $logStreamName)
 frontendUrl=$(echo "$logs" | grep -o 'FrontendStack.CdnURL = [^ ]*' | cut -d' ' -f3 | tr -d '\n,')
 
-echo "$(prefix)Frontend URL: $frontendUrl"
+echo "$(prefix)[FINISH] Go Smile at $frontendUrl"
