@@ -34,9 +34,9 @@ projectName=$(echo $outputs | jq -r '.[] | select(.OutputKey=="ProjectName").Out
 
 buildId=$(aws codebuild start-build --project-name $projectName --query 'build.id' --output text)
 echo -e "$(prefix)$YELLOW [Deployment] Starting the IaC deployment.$ENDCOLOR"
-echo -e "$(prefix)$CYAN INFO: The IaC stack is built with AWS CDK and executed by the CodeBuild project '$projectName.'$ENDCOLOR"
+echo -e "$(prefix)$CYAN INFO: The IaC stack is built with AWS CDK and executed by the CodeBuild project '$projectName'.$ENDCOLOR"
 echo -e "$(prefix)$CYAN INFO: ☕ Go grab a coffee while we'll wait for the CodeBuild run to complete. It will take about 15 minutes.$ENDCOLOR"
-echo -e "$(prefix)$CYAN INFO: For the nerds: log stream available at: https://$Region.console.aws.amazon.com/codesuite/codebuild/projects/$projectName/build/$buildId/?region=$Region $ENDCOLOR"
+echo -e "$(prefix)$CYAN INFO: Meanwhile, full details available on the following log stream: https://$Region.console.aws.amazon.com/codesuite/codebuild/projects/$projectName/build/$buildId/?region=$Region $ENDCOLOR"
 while true; do
     buildStatus=$(aws codebuild batch-get-builds --ids $buildId --query 'builds[0].buildStatus' --output text)
     if [[ "$buildStatus" == "SUCCEEDED" || "$buildStatus" == "FAILED" || "$buildStatus" == "STOPPED" ]]; then
