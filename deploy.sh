@@ -10,7 +10,7 @@ source vars.sh
 stackId=$(aws cloudformation create-stack \
   --stack-name $StackName \
   --region $Region \
-  --template-body file://deploy.yml \
+  --template-body file://src/deploy.yml \
   --capabilities CAPABILITY_IAM \
   --query 'StackId' --output text)
 
@@ -53,7 +53,6 @@ logStreamName=$(echo $buildDetail | jq -r '.streamName')
 
 #echo "$(prefix)Build Log Group Name: $logGroupName"
 #echo "$(prefix)Build Log Stream Name: $logStreamName"
-
 #echo "$(prefix)Fetch CDK deployment logs..."
 logs=$(aws logs get-log-events --log-group-name $logGroupName --log-stream-name $logStreamName)
 frontendUrl=$(echo "$logs" | grep -o 'FrontendStack.CdnURL = [^ ]*' | cut -d' ' -f3 | tr -d '\n",')
