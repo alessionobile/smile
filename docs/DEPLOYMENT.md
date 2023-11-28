@@ -11,8 +11,8 @@ Check your AWS IAM User or IAM Role permissions.
 The deployment requires AdministratorAccess to create CodeBuild pipelines, deploy CDK stacks, and respective IAM Roles.
 
 ## 🚀 Deployment
-1. Open [CloudShell in eu-central-1](https://eu-central-1.console.aws.amazon.com/cloudshell/home?region=eu-central-1#)
-2. Run deployment via following commands
+1. Open [AWS CloudShell in eu-central-1](https://eu-central-1.console.aws.amazon.com/cloudshell/home?region=eu-central-1#)
+2. Run the deployment via the following commands
 
 ```sh
 git clone https://github.com/alessionobile/smile.git
@@ -40,7 +40,7 @@ This deployment architecture has been built with three objectives in mind:
 - [AWS CloudFormation](https://aws.amazon.com/cloudformation/) is used to create an AWS CodeBuild project, as described in [src/deploy.yml](../src/deploy.yml);
 - [AWS CodeBuild](https://aws.amazon.com/codebuild/) runs [AWS CDK for Typescript](https://docs.aws.amazon.com/cdk/v2/guide/home.html) to deploy Frontend and Backend stacks, as described in [src/infrastructure/app.ts](../src/infrastructure/app.ts).
 
-**3. Be ready for CI/CD:** the proposed architecture sets the foundation for the implementation of Continuous Integration and Continuous Deployment (CI/CD).
+**3. Set the stage for CI/CD:** the proposed architecture sets the foundation for the implementation of Continuous Integration and Continuous Deployment (CI/CD).
 
 ![](./diagrams/detect-smile-deployment-with-steps.png)
 
