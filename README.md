@@ -7,46 +7,9 @@ Abstract: A fully functional web application that streams video from a webcam an
 
 In this proof-of-concept (PoC) project, I will demonstrate how to build a fully serverless web application on AWS that analyzes a webcam video stream and detects smiles in near real-time using Amazon Rekognition. The goal of this PoC is to showcase the integration of computer vision technologies in modern web applications and to provide a fun and engaging user experience.
 
-## 🚀 Check your AWS IAM User permissions
+## Deployment
 
-
-## 🚀 Deployment
-1. Open [CloudShell in eu-central-1](https://eu-central-1.console.aws.amazon.com/cloudshell/home?region=eu-central-1#)
-2. Run deployment via following commands
-
-```sh
-git clone https://github.com/alessionobile/smile.git
-cd smile
-chmod u+x deploy.sh
-./deploy.sh
-```
-
-3. After about 15 minutes you will get the following output:
-
-```
-202X-XX-XX XX:XX:XX [Smile] ✅ Go Smile at https://xxxxxxxxx.cloudfront.nen
-```
-
-4. Open the provided link from your browser.
-
-## 😊 Usage
-
-1. You will land on the Sign-In page by default.
-2. If this is the first time running the app, click on the Create Account tab (top right)
-3. Set & confirm your password, set your email, and click on Create Account
-
-> **Important**
-> This application allows anyone with the URL to create an account and sign-up. The use on production is not recommended.
-
-![](./docs/how-to/smile-create-account.png)
-
-4. Enter the confirmation code you will receive by email
-
-![](./docs/how-to/smile-confirm-code.png)
-
-5. Start the Smile detection!
-
-![](./docs/how-to/smile-start-detection.png)
+To deploy/destroy the stack, follow the instructions at [docs/DEPLOYMENT.md](./docs/DEPLOYMENT.md).
 
 ## Architecture
 
@@ -63,40 +26,24 @@ Services breakdown:
 
 ![](./docs/diagrams/detect-smile.png)
 
-## Not covered
+## Usage
 
-- [ ] Web Application Firewall
-- [ ] Strict IAM Roles
+1. You will land on the Sign-In page by default.
+2. If this is the first time running the app, click on the Create Account tab (top right)
+3. Set & confirm your password, set your email, and click on Create Account
 
+> **Important:**
+> This application allows anyone with the URL to create an account and sign-up. The use on production is not recommended.
 
-## Clean up
+![](./docs/how-to/smile-create-account.png)
 
-If your CloudShell session is still open from previous steps:
+4. Enter the confirmation code you will receive by email
 
-```sh
-chmod u+x destroy.sh
-./destroy.sh
-```
+![](./docs/how-to/smile-confirm-code.png)
 
-Otherwise:
+5. Start the Smile detection!
 
-1. Open [CloudShell in eu-central-1](https://eu-central-1.console.aws.amazon.com/cloudshell/home?region=eu-central-1#)
-2. Clone the repo and destroy the Smile environment
-
-```sh
-git clone https://github.com/alessionobile/smile.git
-cd smile
-chmod u+x destroy.sh
-./destroy.sh
-```
-
-The process will delete three stacks:
-
-```
-202X-XX-XX XX:XX:XX [Smile] [FrontendStack] ✅ Deleted.
-202X-XX-XX XX:XX:XX [Smile] [BackendStack] ✅ Deleted.
-202X-XX-XX XX:XX:XX [Smile] [SmilePipeline Stack] ✅ Deleted.
-```
+![](./docs/how-to/smile-start-detection.png)
 
 ## License
 
