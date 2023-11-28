@@ -31,6 +31,17 @@ chmod u+x deploy.sh
 
 ## Deployment Pipeline Architecture
 
+This deployment architecture has been built with three objectives in mind:
+
+**1. Deploy/destroy in one simple step:** stacks can be deployed/destroyed by running [deploy.sh](../deploy.sh) and [destroy.sh](../destroy.sh) from AWS CloudShell.
+
+**2. Eliminate local libraries dependencies:** the workflow runs entirely on AWS services and does not require a local environment.
+- AWS CloudShell is used to initiate a terminal session in your AWS Console and initiate deploy/destroy;
+- AWS CloudFormation is used to create an AWS CodeBuild project, as described in [src/deploy.yml](../src/deploy.yml);
+- AWS CodeBuild runs AWS CDK to deploy Frontend and Backend stacks, as described in [src/infrastructure/app.ts](../src/infrastructure/app.ts).
+
+**3. Be ready for CI/CD:** the proposed architecture sets the foundation for the implementation of Continuous Integration and Continuous Deployment (CI/CD).
+
 ![](./diagrams/detect-smile-deployment-with-steps.png)
 
 ## Clean up

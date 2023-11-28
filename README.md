@@ -9,22 +9,10 @@ In this proof-of-concept (PoC) project, I will demonstrate how to build a fully 
 
 ## Deployment
 
-To deploy/destroy the stack, follow the instructions at [docs/DEPLOYMENT.md](./docs/DEPLOYMENT.md).
-
-## Architecture
-
-All services adopted in this PoC have been selected for three main reasons: 1/ AWS managed serverless services to reduce operational overhead, offload security heavy-lifting to AWS, and establish a granular consumption-based cost model; 2/ boost development speed and benefit from a well-tuned computer vision service at low cost; 3/ all services can be deployed using AWS CDK as IaC tool.
-
-Services breakdown:
-
-- [Amazon CloudFront](https://aws.amazon.com/cloudfront/): a content distribution network (CDN) used to deliver content at low-latency across the globe;
-- [S3](https://aws.amazon.com/s3/): a highly available and durable object storage service. In this project I will use it to store web application static assets, such as JS, CSS, HTML files;
-- [Amazon Cognito](https://aws.amazon.com/cognito/): a secure and scalable user identity and access management service. In this project I’ll use it to implement user registration and login capabilities;
-- [Amazon API Gateway](https://aws.amazon.com/api-gateway/): a scalable HTTP/REST API Gateway which offers out-of-the-box integrations with Amazon Cognito for authentication, Amazon Lambda and other compute services for downstream request routing;
-- [AWS Lambda](https://aws.amazon.com/lambda/): a function-as-a-service solution. In this project I will use it as a wrapper for the interaction and evaluation of the Amazon Rekognition API response;
-- [AWS Rekognition](https://aws.amazon.com/rekognition/): a deep learning-based image and video recognition service with face detection and analysis capabilities.
-
-![](./docs/diagrams/detect-smile.png)
+1. To deploy/destroy the stack, follow the instructions at [docs/DEPLOYMENT.md](./docs/DEPLOYMENT.md).
+2. The deploy step will output a Frontend URL link.
+3. Open the link provided from your browser.
+4. Follow the steps on the next Usage chapter.
 
 ## Usage
 
@@ -44,6 +32,21 @@ Services breakdown:
 5. Start the Smile detection!
 
 ![](./docs/how-to/smile-start-detection.png)
+
+## Architecture
+
+All services adopted in this PoC have been selected for three main reasons: 1/ AWS managed serverless services to reduce operational overhead, offload security heavy-lifting to AWS, and establish a granular consumption-based cost model; 2/ boost development speed and benefit from a well-tuned computer vision service at low cost; 3/ all services can be deployed using AWS CDK as IaC tool.
+
+Services breakdown:
+
+- [Amazon CloudFront](https://aws.amazon.com/cloudfront/): a content distribution network (CDN) used to deliver content at low-latency across the globe;
+- [S3](https://aws.amazon.com/s3/): a highly available and durable object storage service. In this project I will use it to store web application static assets, such as JS, CSS, HTML files;
+- [Amazon Cognito](https://aws.amazon.com/cognito/): a secure and scalable user identity and access management service. In this project I’ll use it to implement user registration and login capabilities;
+- [Amazon API Gateway](https://aws.amazon.com/api-gateway/): a scalable HTTP/REST API Gateway which offers out-of-the-box integrations with Amazon Cognito for authentication, Amazon Lambda and other compute services for downstream request routing;
+- [AWS Lambda](https://aws.amazon.com/lambda/): a function-as-a-service solution. In this project I will use it as a wrapper for the interaction and evaluation of the Amazon Rekognition API response;
+- [AWS Rekognition](https://aws.amazon.com/rekognition/): a deep learning-based image and video recognition service with face detection and analysis capabilities.
+
+![](./docs/diagrams/detect-smile.png)
 
 ## License
 
